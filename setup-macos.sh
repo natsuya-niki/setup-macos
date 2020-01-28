@@ -17,15 +17,15 @@ echo 'Setup MacOS'
 defaults write -g NSAutomaticWindowAnimationsEnabled -bool false    # ファイルを開くときのアニメーションを無効にする
 defaults write -g NSInitialToolTipDelay -integer 0    # ツールチップ表示までのタイムラグをなくす
 defaults write -g NSWindowResizeTime 0.1    # ダイアログ表示やウィンドウリサイズ速度を高速化する
-defaults write NSGlobalDomain com.apple.springing.delay -float 0    # スプリングロード遅延を除去する
-defaults write NSGlobalDomain com.apple.springing.enabled -bool true    # ディレクトリのスプリングロードを有効にする
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"    # スクロールバーを常時表示する
-defaults write NSGlobalDomain NSWindowResizeTime -float 0.001    # コンソールアプリケーションの画面サイズ変更を高速にする
+defaults write -g com.apple.springing.delay -float 0    # スプリングロード遅延を除去する
+defaults write -g com.apple.springing.enabled -bool true    # ディレクトリのスプリングロードを有効にする
+defaults write -g AppleShowScrollBars -string "Always"    # スクロールバーを常時表示する
+defaults write -g NSWindowResizeTime -float 0.001    # コンソールアプリケーションの画面サイズ変更を高速にする
 
 
 ## キーリピート
-defaults write NSGlobalDomain KeyRepeat -int 2    # キーリピートの速度
-defaults write NSGlobalDomain InitialKeyRepeat -int 15    # キーリピート開始までのタイミング
+defaults write -g KeyRepeat -int 2    # キーリピートの速度
+defaults write -g InitialKeyRepeat -int 15    # キーリピート開始までのタイミング
 
 
 ## Dock
@@ -57,7 +57,7 @@ defaults write com.apple.Safari IncludeDevelopMenu -bool true    # Safari の開
 defaults write com.apple.Safari IncludeInternalDebugMenu -bool true    # Safari の開発・デバッグメニューを有効にする
 defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true    # Safari の開発・デバッグメニューを有効にする
 defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true    # Safari の開発・デバッグメニューを有効にする
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true    # Safari のコンテキストメニューに Web インスペクタを追加する
+defaults write -g WebKitDeveloperExtras -bool true    # Safari のコンテキストメニューに Web インスペクタを追加する
 
 
 ## スクリーンショット
@@ -65,7 +65,7 @@ defaults write com.apple.screencapture disable-shadow -bool true    # スクリ�
 defaults write com.apple.screencapture type -string "png"    # スクリーンショットの保存形式を PNG にする
 defaults write com.apple.screencapture location ~/Pictures/    # スクリーンショットの保存先を変更
 defaults write com.apple.screencapture name ""    # スクリーンショットのファイル名のプレフィックス「スクリーンショット」を無くす
-defaults write com.apple.screencapture "include-date" 0    # スクリーンショットの日付を無くす
+# defaults write com.apple.screencapture "include-date" 1    # スクリーンショットの日付を無くす
 
 
 ## 外部デバイス
@@ -73,12 +73,26 @@ defaults write com.apple.screencapture "include-date" 0    # スクリーンシ�
 
 
 ## .DS_Store
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true    # USB やネットワークストレージに .DS_Store ファイルを作成しない
+# USB やネットワークストレージに .DS_Store ファイルを作成しない
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 
+## ホットコーナー
+# 右上 → デスクトップを表示
+defaults write com.apple.dock wvous-tr-corner -int 4
+defaults write com.apple.dock wvous-tr-modifier -int 0
+# 右下 → 画面をロック
+defaults write com.apple.dock wvous-br-corner -int 13
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+
+## 時刻表示
+defaults write com.apple.menuextra.clock DateFormat -string "M\u6708d\u65e5(EEE)  H:mm"    # 日付と時刻のフォーマット（24時間表示、「1月1日(月)」）
+defaults write com.apple.menuextra.clock FlashDateSeparators -int 1    # 「:」の点滅をする
+
+
 ## その他 システム設定
-sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName    # 時計アイコンクリック時に OS やホスト名 IP を表示する
 chflags nohidden ~/Library    # ~/Library ディレクトリを見えるようにする
 sudo chflags nohidden /Volumes    # /Volumes ディレクトリを見えるようにする
 sudo nvram SystemAudioVolume=" "    # ブート時のサウンドを無効化する
@@ -88,25 +102,28 @@ defaults write com.apple.dashboard mcx-disabled -bool true    # Dashboard を無
 defaults write com.apple.LaunchServices LSQuarantine -bool false    # 未確認のアプリケーションを実行する際のダイアログを無効にする
 defaults write com.apple.NetworkBrowser ShowThisComputer -bool true    # ファイル共有を有効にした時、共有先に自分の Mac を表示させる
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false    # ファイルのダウンロード後に自動でファイルを開くのを無効化する
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true    # 全ての拡張子のファイルを表示する
-defaults write -g AppleLanguages -array en ja    # 日本語表記を英語表記にする （「アプリケーション」→「Application」など）
+defaults write -g AppleShowAllExtensions -bool true    # 全ての拡張子のファイルを表示する
+
+## その他便利設定
+# ユーザー配下のディレクトリを英語表記にする
+rm ~/Applications/.localized
+rm ~/Desktop/.localized
+rm ~/Documents/.localized
+rm ~/Downloads/.localized
+rm ~/Library/.localized
+rm ~/Movies/.localized
+rm ~/Music/.localized
+rm ~/Public/.localized
+rm ~/Pictures/.localized
 
 
-## ホットコーナー
-# Top right screen corner → Desktop （右上 → デスクトップを表示）
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0
-# Bottom right screen corner → Screen lock （右下 → 画面をロック）
-defaults write com.apple.dock wvous-br-corner -int 13
-defaults write com.apple.dock wvous-br-modifier -int 0
-
-
-## 再起動以外の反映
+## 反映（ログイン中）
 killall Finder
 killall Dock
 killall SystemUIServer
 
-echo 'Finished. Please restart system.'
+echo 'Finished.'
+echo 'Restart to reflect all settings.'
 
 
 # --------------------------------------------------------------------------------
