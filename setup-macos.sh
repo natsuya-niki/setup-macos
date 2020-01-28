@@ -31,7 +31,7 @@ defaults write -g InitialKeyRepeat -int 15    # キーリピート開始まで�
 ## Dock
 defaults write com.apple.dock autohide-delay -float 0    # Dock が表示されるまでの待ち時間を無効にする
 defaults write com.apple.dock autohide -bool true    # Dockを自動で隠す
-defaults write com.apple.dock mcx-expose-disabled -bool true    # Mission Control を使用不可にする
+# defaults write com.apple.dock mcx-expose-disabled -bool true    # Mission Control を使用不可にする。※注意：これを設定するとホットコーナーが効かなくなる
 # defaults write com.apple.dock tilesize -int 25    # Dockアイコンを小さめに表示
 
 
