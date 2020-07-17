@@ -78,15 +78,6 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 
-## ホットコーナー
-# 右上 → デスクトップを表示
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0
-# 右下 → 画面をロック
-defaults write com.apple.dock wvous-br-corner -int 13
-defaults write com.apple.dock wvous-br-modifier -int 0
-
-
 ## 時刻表示
 defaults write com.apple.menuextra.clock DateFormat -string "M\u6708d\u65e5(EEE)  H:mm"    # 日付と時刻のフォーマット（24時間表示、「1月1日(月)」）
 defaults write com.apple.menuextra.clock FlashDateSeparators -int 1    # 「:」の点滅をする
